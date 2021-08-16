@@ -5,8 +5,8 @@ import os.path
 import errno
 import shutil
 
-#print("Enter folder path")
-#given_dir = os.path.abspath(input())
+print("Enter folder path")
+given_dir = os.path.abspath(input())
 
 
 path= '/Users/otenkeu/error_dir'
@@ -16,7 +16,7 @@ size = 0
 
 max_size = 131072
 
-given_dir = '~/otenkeu/Downloads'
+#given_dir = '~/otenkeu/Downloads'
 
 
 
