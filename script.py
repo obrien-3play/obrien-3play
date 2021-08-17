@@ -34,7 +34,7 @@ if not os.path.exists(path):
 for path, dirs, files in os.walk(path):
     # checking the size of each file
     for file in files:
-        size = os.stat(os.path.join( folder, file  )).st_size
+        size = os.stat(os.path.join( given_dir, file  )).st_size
         #                            ????? something else than folder
 
         if size>max_size:
