@@ -13,31 +13,31 @@ print("Enter folder path")
 given_dir = os.path.abspath(input())
 
 
-path= '/Users/otenkeu/error_dir'
+PATH_ERROR_DIR= '/Users/otenkeu/error_dir'
 
-# for storing size of each file
-size = 0
+# for storing SIZE of each file
+SIZE = 0
 
-max_size = 131072
+MAX_SIZE = 131072
 
 #given_dir = '~/otenkeu/Downloads'
 
-# Check whether the specified path is an existing directory or not
+# Check whether the specified path_ERROR_DIR is an existing directory or not
 
-if not os.path.exists(path):
+if not os.path.exists(PATH_ERROR_DIR):
     try:
-        os.makedirs(path)
+        os.makedirs(PATH_ERROR_DIR)
     except OSError as error:
         if error.errno != errno.EEXIST:
             raise
 
-for path, dirs, files in os.walk(path):
-    # checking the size of each file
+for path, dirs, files in os.walk(PATH_ERROR_DIR):
+    # checking the SIZE of each file
     for file in files:
-        size = os.stat(os.path.join( given_dir, file  )).st_size
+        SIZE = os.stat(os.path.join( given_dir, file  )).st_SIZE
         #                            ????? something else than folder
 
-        if size>max_size:
-            shutil.move(path.join(given_dir,file), path)
+        if SIZE>MAX_SIZE:
+            shutil.move(path.join(given_dir,file), PATH_ERROR_DIR)
 
 print ('Script ran successfully')
