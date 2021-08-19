@@ -5,16 +5,17 @@ Test script for managing files too large for our API.
 """
 
 import os
-import os.path
 import errno
 import shutil
+from pathlib import Path
 
-DEFAULT_GIVEN_DIR = '~/otenkeu/Downloads'
+base_dir = Path.home()
+DEFAULT_GIVEN_DIR = base_dir / 'Downloads'
 
 print("Enter folder path (enter for default)")
 given_dir = os.path.abspath(input() or DEFAULT_GIVEN_DIR)
 
-PATH_ERROR_DIR = '/Users/otenkeu/error_dir'
+PATH_ERROR_DIR = base_dir / 'error_dir'
 MAX_SIZE = 131072  # larger than this is an error
 
 # Check whether the specified path_ERROR_DIR is an existing directory or not;
@@ -26,7 +27,8 @@ if not os.path.exists(PATH_ERROR_DIR):
         if error.errno != errno.EEXIST:
             raise
         else:
-            ????
+            print('UNKNOWN EXIT')
+            raise SystemExit
 
 # Walk the directory, moving files that don't meet our condition
 for path, dirs, files in os.walk(PATH_ERROR_DIR):
