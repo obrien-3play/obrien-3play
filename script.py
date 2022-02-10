@@ -45,5 +45,7 @@ for path, dirs, files in os.walk(given_dir_path):
         size = os.stat(os.path.join(given_dir_path, file)).st_size
         if size > max_size:
             shutil.move(os.path.join(given_dir_path, file), error_dir_path)
+            print("the filename moved is", file,"the file size is",size, "bytes which is greater 131072 bytes ")
+
 
 print ('Congratulation the script ran successfully')
