@@ -1,0 +1,71 @@
+#!/usr/bin/env perl
+
+# Perl utility for starting a Jupyter notebook in the current directory.
+
+# First inquires for the list of running notebook servers. If one is running
+# in the current directory, open a web page to it. If none are running, start
+# one in the background.
+
+use Cwd;
+
+my $argc = $#ARGV+1;
+if ($argc) {
+    my $cmd = $ARGV[0];
+    if ($cmd eq "list") {
+        # list open sessions
+        print "\n";
+        system("jupyter notebook list");
+        print "\n";
+    }
+    elsif ($cmd eq "lab") {
+        # open a lab session
+        system("jupyter lab 1>/dev/null 2>&1 &");
+    }
+    elsif ($cmd eq "kill") {
+        # kill outstanding sessions
+        system("jupyter notebook list | killport");
+    }
+    elsif ($cmd eq "notebook") {
+        # open new notebook
+        system("jupyter notebook 1>/dev/null 2>&1 &");
+    }
+    elsif ($cmd eq "open") {
+        # open existing file
+        system("jupyter notebook '$ARGV[1]' 1>/dev/null 2>&1 &");
+    }
+    else {
+        print "failed to understand command '$cmd'\n";
+    }
+    exit();
+}
+
+my $cwd = getcwd;
+
+my @lines = split /\n/, `jupyter notebook list`;
+foreach (@lines) {
+    chomp;
+    if (/::/) {
+        my @t = split /\s+::\s+/;
+        if ($t[1] eq $cwd) {
+            print "opening Jupyter notebook at ${t[0]}\n";
+            system("open", $t[0]);
+            exit();
+        }
+    }
+}
+# No existing server found, so start one
+system("jupyter notebook 1>/dev/null 2>&1 &")
+
+
+# Could possibly use the --json flag, which emits lines
+# of the form
+# { "notebook_dir": "/Users/jeunice/pytest/testing/codement1",
+#   "secure": false,
+#   "pid": 52284,
+#   "base_url": "/",
+#   "url": "http://localhost:8888/",
+#   "port": 8888,
+#   "hostname": "localhost"
+# }
+# while these are well-formed records, the output as a whole is
+# not wrapped in an array, and is therefore not JSON as a whole
